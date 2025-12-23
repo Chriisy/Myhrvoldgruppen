@@ -17,6 +17,7 @@ import { salesRouter } from '../modules/sales/sales.router';
 import { damagesRouter } from '../modules/damages/damages.router';
 import { chatRouter } from '../modules/chat/chat.router';
 import { forumRouter } from '../modules/forum/forum.router';
+import { searchRouter } from '../modules/search/search.router';
 
 export const appRouter = router({
   health: healthRouter,
@@ -37,6 +38,7 @@ export const appRouter = router({
   damages: damagesRouter,
   chat: chatRouter,
   forum: forumRouter,
+  search: searchRouter,
 });
 
 export type AppRouter = typeof appRouter;
