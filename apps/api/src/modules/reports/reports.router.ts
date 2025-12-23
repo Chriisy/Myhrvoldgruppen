@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { eq, and, desc, gte, lte, count } from 'drizzle-orm';
 import { router, protectedProcedure } from '../../trpc/trpc';
 import { serviceVisits } from '@myhrvold/db/schema';
+import { generateServiceReportPdf } from '../../lib/pdf';
 
 export const reportsRouter = router({
   // Get service report by visit ID
@@ -81,7 +82,7 @@ export const reportsRouter = router({
       return visit;
     }),
 
-  // Generate report PDF (placeholder - would integrate with PDF library)
+  // Generate report PDF
   generatePdf: protectedProcedure
     .input(z.object({ visitId: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
@@ -95,16 +96,40 @@ export const reportsRouter = router({
       });
 
       if (!visit) {
-        throw new Error('Besøk ikke funnet');
+        throw new Error('Besok ikke funnet');
       }
 
-      // In production, would generate actual PDF here using libraries like puppeteer or pdfkit
-      // For now, return a mock response
+      // Generate actual PDF
+      const pdfBuffer = await generateServiceReportPdf({
+        visitNumber: visit.visitNumber,
+        customerName: visit.customer?.name || 'Ukjent kunde',
+        customerAddress: visit.customer?.address,
+        technicianName: visit.technician
+          ? `${visit.technician.firstName || ''} ${visit.technician.lastName || ''}`.trim()
+          : 'Ukjent tekniker',
+        plannedDate: visit.plannedDate,
+        actualStartTime: visit.actualStartTime,
+        actualEndTime: visit.actualEndTime,
+        workPerformed: visit.workPerformed,
+        findings: visit.findings,
+        recommendations: visit.recommendations,
+        laborHours: visit.laborHours,
+        laborCost: visit.laborCost,
+        partsCost: visit.partsCost,
+        travelCost: visit.travelCost,
+        totalCost: visit.totalCost,
+        customerSignature: visit.customerSignature,
+        customerSignedBy: visit.customerSignedBy,
+        customerSignedAt: visit.customerSignedAt,
+      });
+
+      // Return base64 encoded PDF
       return {
         success: true,
         reportNumber: visit.visitNumber,
         generatedAt: new Date().toISOString(),
-        // pdfUrl would be returned here
+        pdfBase64: pdfBuffer.toString('base64'),
+        filename: `servicerapport-${visit.visitNumber}.pdf`,
       };
     }),
 
