@@ -27,3 +27,9 @@ export * from './loans';
 
 // HMS/SJA
 export * from './hms';
+
+// Stinkers
+export * from './stinkers';
+
+// Sales/CRM
+export * from './sales';

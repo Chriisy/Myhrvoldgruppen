@@ -12,6 +12,9 @@ import { partnersRouter } from '../modules/partners/partners.router';
 import { loansRouter } from '../modules/loans/loans.router';
 import { installationsRouter } from '../modules/installations/installations.router';
 import { hmsRouter } from '../modules/hms/hms.router';
+import { stinkersRouter } from '../modules/stinkers/stinkers.router';
+import { salesRouter } from '../modules/sales/sales.router';
+import { damagesRouter } from '../modules/damages/damages.router';
 
 export const appRouter = router({
   health: healthRouter,
@@ -27,6 +30,9 @@ export const appRouter = router({
   loans: loansRouter,
   installations: installationsRouter,
   hms: hmsRouter,
+  stinkers: stinkersRouter,
+  sales: salesRouter,
+  damages: damagesRouter,
 });
 
 export type AppRouter = typeof appRouter;
