@@ -15,6 +15,8 @@ import { hmsRouter } from '../modules/hms/hms.router';
 import { stinkersRouter } from '../modules/stinkers/stinkers.router';
 import { salesRouter } from '../modules/sales/sales.router';
 import { damagesRouter } from '../modules/damages/damages.router';
+import { chatRouter } from '../modules/chat/chat.router';
+import { forumRouter } from '../modules/forum/forum.router';
 
 export const appRouter = router({
   health: healthRouter,
@@ -33,6 +35,8 @@ export const appRouter = router({
   stinkers: stinkersRouter,
   sales: salesRouter,
   damages: damagesRouter,
+  chat: chatRouter,
+  forum: forumRouter,
 });
 
 export type AppRouter = typeof appRouter;

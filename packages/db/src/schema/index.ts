@@ -33,3 +33,6 @@ export * from './stinkers';
 
 // Sales/CRM
 export * from './sales';
+
+// Chat
+export * from './chat';
