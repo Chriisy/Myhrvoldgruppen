@@ -21,3 +21,9 @@ export * from './installations';
 
 // Communication
 export * from './communication';
+
+// Loans
+export * from './loans';
+
+// HMS/SJA
+export * from './hms';

@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { trpc } from '../../../src/lib/api';
 import { LoadingScreen } from '../../../src/components/LoadingScreen';
 import { ErrorView } from '../../../src/components/ErrorView';
+import { SignatureCapture } from '../../../src/components/SignatureCapture';
 import {
-  ArrowLeft, Building, Calendar, Clock, User, FileText, CheckCircle, Wrench
+  ArrowLeft, Building, Calendar, Clock, User, FileText, CheckCircle, Wrench, PenTool, Send, CreditCard
 } from 'lucide-react-native';
 
 export default function VisitDetailScreen() {
@@ -13,14 +14,32 @@ export default function VisitDetailScreen() {
   const router = useRouter();
   const [workPerformed, setWorkPerformed] = useState('');
   const [findings, setFindings] = useState('');
+  const [recommendations, setRecommendations] = useState('');
+  const [laborHours, setLaborHours] = useState('');
+  const [showSignature, setShowSignature] = useState(false);
+  const [signature, setSignature] = useState<{ data: string; signedBy: string } | null>(null);
 
   const { data: visit, isLoading, error, refetch } = trpc.visits.byId.useQuery(
     { id: id! },
     { enabled: !!id }
   );
 
+  const saveSignatureMutation = trpc.reports.saveSignature.useMutation();
+
   const completeMutation = trpc.visits.complete.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      // Save signature if captured
+      if (signature) {
+        try {
+          await saveSignatureMutation.mutateAsync({
+            visitId: id!,
+            signature: signature.data,
+            signedBy: signature.signedBy,
+          });
+        } catch (e) {
+          // Continue even if signature fails
+        }
+      }
       Alert.alert('Besøk fullført', 'Servicerapporten er lagret.');
       refetch();
     },
@@ -28,6 +47,11 @@ export default function VisitDetailScreen() {
       Alert.alert('Feil', err.message);
     },
   });
+
+  const handleSignatureSave = (signatureData: string, signedBy: string) => {
+    setSignature({ data: signatureData, signedBy });
+    setShowSignature(false);
+  };
 
   if (isLoading) return <LoadingScreen />;
   if (error) return <ErrorView error={error} onRetry={refetch} />;
@@ -152,7 +176,10 @@ export default function VisitDetailScreen() {
             <Text className="text-lg font-semibold text-gray-900 mb-3">Fullfør besøk</Text>
 
             <View className="bg-white rounded-xl p-4 mb-4">
-              <Text className="text-sm font-medium text-gray-700 mb-2">Utført arbeid *</Text>
+              <View className="flex-row items-center mb-2">
+                <Wrench size={16} color="#003366" />
+                <Text className="text-sm font-medium text-gray-700 ml-2">Utført arbeid *</Text>
+              </View>
               <TextInput
                 className="border border-gray-200 rounded-lg px-4 py-3 min-h-[100px]"
                 placeholder="Beskriv hva som ble gjort..."
@@ -164,10 +191,10 @@ export default function VisitDetailScreen() {
             </View>
 
             <View className="bg-white rounded-xl p-4 mb-4">
-              <Text className="text-sm font-medium text-gray-700 mb-2">Funn og anbefalinger</Text>
+              <Text className="text-sm font-medium text-gray-700 mb-2">Funn</Text>
               <TextInput
                 className="border border-gray-200 rounded-lg px-4 py-3 min-h-[80px]"
-                placeholder="Eventuelle funn eller anbefalinger..."
+                placeholder="Eventuelle funn eller avvik..."
                 multiline
                 textAlignVertical="top"
                 value={findings}
@@ -175,23 +202,83 @@ export default function VisitDetailScreen() {
               />
             </View>
 
+            <View className="bg-white rounded-xl p-4 mb-4">
+              <Text className="text-sm font-medium text-gray-700 mb-2">Anbefalinger</Text>
+              <TextInput
+                className="border border-gray-200 rounded-lg px-4 py-3 min-h-[80px]"
+                placeholder="Anbefalinger til kunden..."
+                multiline
+                textAlignVertical="top"
+                value={recommendations}
+                onChangeText={setRecommendations}
+              />
+            </View>
+
+            <View className="bg-white rounded-xl p-4 mb-4">
+              <View className="flex-row items-center mb-2">
+                <Clock size={16} color="#003366" />
+                <Text className="text-sm font-medium text-gray-700 ml-2">Timer brukt</Text>
+              </View>
+              <TextInput
+                className="border border-gray-200 rounded-lg px-4 py-3"
+                placeholder="Antall timer"
+                keyboardType="decimal-pad"
+                value={laborHours}
+                onChangeText={setLaborHours}
+              />
+            </View>
+
+            <View className="bg-white rounded-xl p-4 mb-4">
+              <View className="flex-row items-center mb-3">
+                <PenTool size={16} color="#003366" />
+                <Text className="text-sm font-medium text-gray-700 ml-2">Kundesignatur</Text>
+              </View>
+
+              {signature ? (
+                <View className="bg-green-50 rounded-lg p-4 items-center">
+                  <CheckCircle size={24} color="#22c55e" />
+                  <Text className="text-green-700 font-medium mt-2">Signert av: {signature.signedBy}</Text>
+                  <Pressable
+                    onPress={() => setShowSignature(true)}
+                    className="mt-2"
+                  >
+                    <Text className="text-primary underline">Endre signatur</Text>
+                  </Pressable>
+                </View>
+              ) : (
+                <Pressable
+                  onPress={() => setShowSignature(true)}
+                  className="bg-gray-50 rounded-lg p-6 items-center border-2 border-dashed border-gray-300"
+                >
+                  <PenTool size={32} color="#9ca3af" />
+                  <Text className="text-gray-500 mt-2">Trykk for å signere</Text>
+                </Pressable>
+              )}
+            </View>
+
             <Pressable
               onPress={handleComplete}
               disabled={!workPerformed.trim() || completeMutation.isPending}
               className={`flex-row items-center justify-center py-4 rounded-xl mb-8 ${
                 workPerformed.trim() && !completeMutation.isPending
-                  ? 'bg-green-600'
+                  ? 'bg-accent'
                   : 'bg-gray-200'
               }`}
             >
               <CheckCircle size={20} color="white" />
               <Text className="text-white font-semibold ml-2">
-                {completeMutation.isPending ? 'Lagrer...' : 'Fullfør besøk'}
+                {completeMutation.isPending ? 'Lagrer...' : 'Fullfør og signer rapport'}
               </Text>
             </Pressable>
           </>
         )}
       </ScrollView>
+
+      <SignatureCapture
+        visible={showSignature}
+        onClose={() => setShowSignature(false)}
+        onSave={handleSignatureSave}
+      />
     </View>
   );
 }
