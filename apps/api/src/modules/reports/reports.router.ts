@@ -103,24 +103,24 @@ export const reportsRouter = router({
       const pdfBuffer = await generateServiceReportPdf({
         visitNumber: visit.visitNumber,
         customerName: visit.customer?.name || 'Ukjent kunde',
-        customerAddress: visit.customer?.address,
+        customerAddress: visit.customer?.address ?? undefined,
         technicianName: visit.technician
           ? `${visit.technician.firstName || ''} ${visit.technician.lastName || ''}`.trim()
           : 'Ukjent tekniker',
         plannedDate: visit.plannedDate,
-        actualStartTime: visit.actualStartTime,
-        actualEndTime: visit.actualEndTime,
-        workPerformed: visit.workPerformed,
-        findings: visit.findings,
-        recommendations: visit.recommendations,
-        laborHours: visit.laborHours,
-        laborCost: visit.laborCost,
-        partsCost: visit.partsCost,
-        travelCost: visit.travelCost,
-        totalCost: visit.totalCost,
-        customerSignature: visit.customerSignature,
-        customerSignedBy: visit.customerSignedBy,
-        customerSignedAt: visit.customerSignedAt,
+        actualStartTime: visit.actualStartTime ?? undefined,
+        actualEndTime: visit.actualEndTime ?? undefined,
+        workPerformed: visit.workPerformed ?? undefined,
+        findings: visit.findings ?? undefined,
+        recommendations: visit.recommendations ?? undefined,
+        laborHours: visit.laborHours ?? undefined,
+        laborCost: visit.laborCost ?? undefined,
+        partsCost: visit.partsCost ?? undefined,
+        travelCost: visit.travelCost ?? undefined,
+        totalCost: visit.totalCost ?? undefined,
+        customerSignature: visit.customerSignature ?? undefined,
+        customerSignedBy: visit.customerSignedBy ?? undefined,
+        customerSignedAt: visit.customerSignedAt ?? undefined,
       });
 
       // Return base64 encoded PDF
