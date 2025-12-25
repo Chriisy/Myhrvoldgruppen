@@ -1,0 +1,27 @@
+{
+  "name": "myhrvold-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @myhrvold/api dev",
+    "dev:mobile": "pnpm --filter @myhrvold/mobile dev",
+    "dev:web": "pnpm --filter @myhrvold/mobile dev:web",
+    "build": "pnpm -r build",
+    "build:api": "pnpm --filter @myhrvold/db build && pnpm --filter @myhrvold/api build",
+    "start": "cd apps/api && node dist/index.js",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm --filter @myhrvold/api test",
+    "db:generate": "pnpm --filter @myhrvold/db generate",
+    "db:push": "pnpm --filter @myhrvold/db push",
+    "db:studio": "pnpm --filter @myhrvold/db studio",
+    "db:seed": "pnpm --filter @myhrvold/db seed"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.14.2"
+}

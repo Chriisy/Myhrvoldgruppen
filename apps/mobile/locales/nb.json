@@ -1,0 +1,81 @@
+{
+  "common": {
+    "save": "Lagre",
+    "cancel": "Avbryt",
+    "delete": "Slett",
+    "edit": "Rediger",
+    "loading": "Laster...",
+    "error": "Noe gikk galt",
+    "retry": "Prøv igjen",
+    "search": "Søk",
+    "filter": "Filter",
+    "noResults": "Ingen resultater",
+    "back": "Tilbake",
+    "next": "Neste",
+    "submit": "Send inn",
+    "create": "Opprett"
+  },
+  "auth": {
+    "login": "Logg inn",
+    "logout": "Logg ut",
+    "email": "E-post",
+    "password": "Passord",
+    "loginError": "Feil e-post eller passord",
+    "loggingIn": "Logger inn..."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Velkommen, {{name}}",
+    "quickActions": "Hurtighandlinger",
+    "newClaim": "Ny reklamasjon",
+    "recentClaims": "Siste reklamasjoner"
+  },
+  "claims": {
+    "title": "Reklamasjoner",
+    "new": "Ny reklamasjon",
+    "details": "Reklamasjonsdetaljer",
+    "status": {
+      "draft": "Utkast",
+      "new": "Ny",
+      "in_progress": "Under behandling",
+      "pending_supplier": "Venter leverandør",
+      "pending_parts": "Venter deler",
+      "resolved": "Løst",
+      "closed": "Lukket",
+      "rejected": "Avvist"
+    },
+    "priority": {
+      "low": "Lav",
+      "medium": "Medium",
+      "high": "Høy",
+      "urgent": "Haster"
+    },
+    "fields": {
+      "claimNumber": "Saksnummer",
+      "supplier": "Leverandør",
+      "customer": "Kunde",
+      "product": "Produkt",
+      "description": "Beskrivelse",
+      "createdAt": "Opprettet",
+      "serialNumber": "Serienummer",
+      "invoiceNumber": "Fakturanummer",
+      "purchaseDate": "Kjøpsdato"
+    },
+    "wizard": {
+      "step1": "Leverandør",
+      "step2": "Produkt",
+      "step3": "Kunde",
+      "step4": "Problem",
+      "step5": "Oppsummering",
+      "selectSupplier": "Velg leverandør",
+      "productInfo": "Produktinformasjon",
+      "customerInfo": "Kundeinformasjon",
+      "problemDescription": "Beskriv problemet",
+      "summary": "Oppsummering"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "settings": "Innstillinger"
+  }
+}

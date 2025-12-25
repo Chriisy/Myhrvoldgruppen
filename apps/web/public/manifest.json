@@ -1,0 +1,92 @@
+{
+  "name": "Myhrvold Service",
+  "short_name": "Myhrvold",
+  "description": "Servicehåndtering for Myhrvoldgruppen AS",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#003366",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "nb-NO",
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Dashboard oversikt"
+    },
+    {
+      "src": "/screenshots/claims.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Reklamasjonshåndtering"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ny reklamasjon",
+      "short_name": "Reklamasjon",
+      "description": "Opprett ny reklamasjon",
+      "url": "/claims/new",
+      "icons": [{ "src": "/icons/claim-icon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Servicebesøk",
+      "short_name": "Besøk",
+      "description": "Se planlagte besøk",
+      "url": "/visits",
+      "icons": [{ "src": "/icons/visit-icon.png", "sizes": "96x96" }]
+    }
+  ]
+}
