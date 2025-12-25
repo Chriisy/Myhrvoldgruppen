@@ -164,7 +164,12 @@ export const visitsRouter = router({
 
       const [visit] = await ctx.db.update(serviceVisits)
         .set({
-          ...data,
+          workPerformed: data.workPerformed,
+          findings: data.findings,
+          recommendations: data.recommendations,
+          laborHours: data.laborHours?.toString(),
+          customerSignature: data.customerSignature,
+          customerSignedBy: data.customerSignedBy,
           status: 'completed',
           actualEndTime: new Date(),
           customerSignedAt: data.customerSignature ? new Date() : undefined,

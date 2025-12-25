@@ -107,7 +107,7 @@ export const reportsRouter = router({
         technicianName: visit.technician
           ? `${visit.technician.firstName || ''} ${visit.technician.lastName || ''}`.trim()
           : 'Ukjent tekniker',
-        plannedDate: visit.plannedDate,
+        plannedDate: visit.plannedDate ?? new Date(),
         actualStartTime: visit.actualStartTime ?? undefined,
         actualEndTime: visit.actualEndTime ?? undefined,
         workPerformed: visit.workPerformed ?? undefined,

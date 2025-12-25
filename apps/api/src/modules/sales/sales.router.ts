@@ -217,7 +217,11 @@ export const salesRouter = router({
 
       const [opportunity] = await ctx.db.insert(opportunities).values({
         opportunityNumber,
-        ...input,
+        name: input.name,
+        description: input.description,
+        customerId: input.customerId,
+        leadId: input.leadId,
+        expectedCloseDate: input.expectedCloseDate?.toISOString(),
         value: input.value?.toString(),
         probability: input.probability?.toString(),
         weightedValue: weightedValue?.toString(),
@@ -322,7 +326,14 @@ export const salesRouter = router({
 
       const [quotation] = await ctx.db.insert(quotations).values({
         quotationNumber,
-        ...input,
+        title: input.title,
+        description: input.description,
+        customerId: input.customerId,
+        opportunityId: input.opportunityId,
+        validFrom: input.validFrom?.toISOString(),
+        validUntil: input.validUntil?.toISOString(),
+        paymentTerms: input.paymentTerms,
+        deliveryTerms: input.deliveryTerms,
         subtotal: subtotal.toString(),
         tax: tax.toString(),
         total: total.toString(),

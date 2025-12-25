@@ -26,9 +26,9 @@ export const searchRouter = router({
             eq(claims.isDeleted, false),
             or(
               ilike(claims.claimNumber, `%${query}%`),
-              ilike(claims.productName, `%${query}%`),
+              ilike(claims.productNameText, `%${query}%`),
               ilike(claims.serialNumber, `%${query}%`),
-              ilike(claims.issueDescription, `%${query}%`)
+              ilike(claims.problemDescription, `%${query}%`)
             )
           ),
           limit: Math.floor(limit / searchTypes.length) + 1,
@@ -42,8 +42,8 @@ export const searchRouter = router({
           type: 'claim',
           id: c.id,
           title: c.claimNumber,
-          subtitle: c.productName,
-          description: c.issueDescription?.substring(0, 100),
+          subtitle: c.productNameText,
+          description: c.problemDescription?.substring(0, 100),
           status: c.status,
           meta: { customer: c.customer?.name },
         })));
@@ -81,7 +81,7 @@ export const searchRouter = router({
             eq(suppliers.isDeleted, false),
             or(
               ilike(suppliers.name, `%${query}%`),
-              ilike(suppliers.orgNumber, `%${query}%`)
+              ilike(suppliers.shortCode, `%${query}%`)
             )
           ),
           limit: Math.floor(limit / searchTypes.length) + 1,
@@ -92,8 +92,8 @@ export const searchRouter = router({
           type: 'supplier',
           id: s.id,
           title: s.name,
-          subtitle: s.category,
-          description: s.orgNumber ? `Org: ${s.orgNumber}` : undefined,
+          subtitle: s.shortCode,
+          description: s.city ? `By: ${s.city}` : undefined,
         })));
       }
 
@@ -105,7 +105,7 @@ export const searchRouter = router({
             or(
               ilike(products.name, `%${query}%`),
               ilike(products.sku, `%${query}%`),
-              ilike(products.brand, `%${query}%`)
+              ilike(products.category, `%${query}%`)
             )
           ),
           limit: Math.floor(limit / searchTypes.length) + 1,
@@ -116,7 +116,7 @@ export const searchRouter = router({
           type: 'product',
           id: p.id,
           title: p.name,
-          subtitle: p.brand,
+          subtitle: p.category,
           description: p.sku ? `SKU: ${p.sku}` : undefined,
         })));
       }
